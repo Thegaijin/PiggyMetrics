@@ -36,8 +36,13 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- <dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-kubernetes</artifactId>
+			<version>${latest.version}</version>
+		</dependency> -->
 	</dependencies>
-	
+
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -49,7 +54,7 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-	
+
 	<build>
 		<plugins>
 			<plugin>
@@ -61,5 +66,5 @@
 			</plugin>
 		</plugins>
 	</build>
-	
+
 </project>

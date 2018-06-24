@@ -109,7 +109,7 @@ services:
       INIT_DUMP: account-service-dump.js
       MONGODB_PASSWORD: $MONGODB_PASSWORD
     build: mongodb/.
-    container_name: ms-pgs-account-mongod
+    container_name: ms-pgs-account-mongodb
     image: thegaijin/ms-pgs-account-mongodb:latest
     restart: always
     logging:
@@ -179,8 +179,8 @@ services:
     environment:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
     build: ./monitoring
-    container_name: pgs-monitoring
-    image: thegaijin/pgs-monitoring
+    container_name: ms-pgs-monitoring
+    image: thegaijin/ms-pgs-monitoring
     restart: always
     depends_on:
       config:

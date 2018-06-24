@@ -1,0 +1,72 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-service
+  labels:
+    app: pgs-auth
+spec:
+  selector:
+    app: pgs-auth
+  ports:
+    - name: port1
+      port: 5000
+      protocol: TCP
+      targetPort: 5000
+    - name: port2
+      port: 27017
+      protocol: TCP
+      targetPort: 27017
+  type: NodePort
+
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: auth-ms-deployment
+  labels:
+    run: pgs-auth
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: pgs-auth
+    spec:
+      containers:
+        - name: ms-pgs-auth-service
+          image: thegaijin/ms-pgs-auth-service
+          ports:
+          - containerPort: 5000
+            protocol: TCP
+        - name: ms-pgs-auth-mongodb
+          image: thegaijin/ms-pgs-auth-mongodb
+          ports:
+          - containerPort: 27017
+            protocol: TCP
+          env:
+            - name: ACCOUNT_SERVICE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: ms-credentials
+                  key: password
+            - name: STATISTICS_SERVICE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: ms-credentials
+                  key: password
+            - name: CONFIG_SERVICE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: ms-credentials
+                  key: password
+            - name: NOTIFICATION_SERVICE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: ms-credentials
+                  key: password
+            - name: MONGODB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: ms-credentials
+                  key: password
