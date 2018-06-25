@@ -50,11 +50,9 @@ node {
   }
 
   stage('compiler, tester, packager') {
-    steps {
-      def mvnHome = tool name:'maven-3', type: 'maven'
-      def mvnCMD = "${mvnHome}/bin/mvn"
-      sh "${mvnCMD} clean package"
-    }
+    def mvnHome = tool name:'maven-3', type: 'maven'
+    def mvnCMD = "${mvnHome}/bin/mvn"
+    sh "${mvnCMD} clean package"
   }
 
   stage('Build docker images') {
