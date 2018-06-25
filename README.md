@@ -22,33 +22,33 @@ PiggyMetrics was decomposed into three core microservices. All of them are indep
 #### Account service
 Contains general user input logic and validation: incomes/expenses items, savings and account settings.
 
-Method	| Path	| Description	| User authenticated	| Available from UI
-------------- | ------------------------- | ------------- |:-------------:|:----------------:|
-GET	| /accounts/{account}	| Get specified account data	|  | 	
-GET	| /accounts/current	| Get current account data	| × | ×
-GET	| /accounts/demo	| Get demo account data (pre-filled incomes/expenses items, etc)	|   | 	×
-PUT	| /accounts/current	| Save current account data	| × | ×
-POST	| /accounts/	| Register new account	|   | ×
+| Method | Path                | Description                                                    | User authenticated | Available from UI |
+| ------ | ------------------- | -------------------------------------------------------------- | :----------------: | :---------------: |
+| GET    | /accounts/{account} | Get specified account data                                     |                    |
+| GET    | /accounts/current   | Get current account data                                       | ×                  | ×                 |
+| GET    | /accounts/demo      | Get demo account data (pre-filled incomes/expenses items, etc) |                    | ×                 |
+| PUT    | /accounts/current   | Save current account data                                      | ×                  | ×                 |
+| POST   | /accounts/          | Register new account                                           |                    | ×                 |
 
 
 #### Statistics service
 Performs calculations on major statistics parameters and captures time series for each account. Datapoint contains values, normalized to base currency and time period. This data is used to track cash flow dynamics in account lifetime.
 
-Method	| Path	| Description	| User authenticated	| Available from UI
-------------- | ------------------------- | ------------- |:-------------:|:----------------:|
-GET	| /statistics/{account}	| Get specified account statistics	          |  | 	
-GET	| /statistics/current	| Get current account statistics	| × | × 
-GET	| /statistics/demo	| Get demo account statistics	|   | × 
-PUT	| /statistics/{account}	| Create or update time series datapoint for specified account	|   | 
+| Method | Path                  | Description                                                  | User authenticated | Available from UI |
+| ------ | --------------------- | ------------------------------------------------------------ | :----------------: | :---------------: |
+| GET    | /statistics/{account} | Get specified account statistics                             |                    |
+| GET    | /statistics/current   | Get current account statistics                               | ×                  | ×                 |
+| GET    | /statistics/demo      | Get demo account statistics                                  |                    | ×                 |
+| PUT    | /statistics/{account} | Create or update time series datapoint for specified account |                    |
 
 
 #### Notification service
 Stores users contact information and notification settings (like remind and backup frequency). Scheduled worker collects required information from other services and sends e-mail messages to subscribed customers.
 
-Method	| Path	| Description	| User authenticated	| Available from UI
-------------- | ------------------------- | ------------- |:-------------:|:----------------:|
-GET	| /notifications/settings/current	| Get current account notification settings	| × | ×	
-PUT	| /notifications/settings/current	| Save current account notification settings	| × | ×
+| Method | Path                            | Description                                | User authenticated | Available from UI |
+| ------ | ------------------------------- | ------------------------------------------ | :----------------: | :---------------: |
+| GET    | /notifications/settings/current | Get current account notification settings  | ×                  | ×                 |
+| PUT    | /notifications/settings/current | Save current account notification settings | ×                  | ×                 |
 
 #### Notes
 - Each microservice has it's own database, so there is no way to bypass API and access persistance data directly.
@@ -59,7 +59,7 @@ PUT	| /notifications/settings/current	| Save current account notification settin
 There's a bunch of common patterns in distributed systems, which could help us to make described core services work. [Spring cloud](http://projects.spring.io/spring-cloud/) provides powerful tools that enhance Spring Boot applications behaviour to implement those patterns. I'll cover them briefly.
 <img width="880" alt="Infrastructure services" src="https://cloud.githubusercontent.com/assets/6069066/13906840/365c0d94-eefa-11e5-90ad-9d74804ca412.png">
 ### Config service
-[Spring Cloud Config](http://cloud.spring.io/spring-cloud-config/spring-cloud-config.html) is horizontally scalable centralized configuration service for distributed systems. It uses a pluggable repository layer that currently supports local storage, Git, and Subversion. 
+[Spring Cloud Config](http://cloud.spring.io/spring-cloud-config/spring-cloud-config.html) is horizontally scalable centralized configuration service for distributed systems. It uses a pluggable repository layer that currently supports local storage, Git, and Subversion.
 
 In this project, I use `native profile`, which simply loads config files from the local classpath. You can see `shared` directory in [Config service resources](https://github.com/sqshq/PiggyMetrics/tree/master/config/src/main/resources). Now, when Notification-service requests it's configuration, Config service responses with `shared/notification-service.yml` and `shared/application.yml` (which is shared between all client applications).
 
@@ -77,7 +77,7 @@ spring:
       fail-fast: true
 ```
 
-##### With Spring Cloud Config, you can change app configuration dynamically. 
+##### With Spring Cloud Config, you can change app configuration dynamically.
 For example, [EmailService bean](https://github.com/sqshq/PiggyMetrics/blob/master/notification-service/src/main/java/com/piggymetrics/notification/service/EmailServiceImpl.java) was annotated with `@RefreshScope`. That means, you can change e-mail text and subject without rebuild and restart Notification service application.
 
 First, change required properties in Config server. Then, perform refresh request to Notification service:
@@ -151,7 +151,7 @@ Also, Eureka provides a simple interface, where you can track running services a
 
 ### Load balancer, Circuit breaker and Http client
 
-Netflix OSS provides another great set of tools. 
+Netflix OSS provides another great set of tools.
 
 #### Ribbon
 Ribbon is a client side load balancer which gives you a lot of control over the behaviour of HTTP and TCP clients. Compared to a traditional load balancer, there is no need in additional hop for every over-the-wire invocation - you can contact desired service directly.
@@ -194,10 +194,10 @@ Let's see our system behavior under load: Account service calls Statistics servi
 
 <img width="880" src="https://cloud.githubusercontent.com/assets/6069066/14194375/d9a2dd80-f7be-11e5-8bcc-9a2fce753cfe.png">
 
-<img width="212" src="https://cloud.githubusercontent.com/assets/6069066/14127349/21e90026-f628-11e5-83f1-60108cb33490.gif">	| <img width="212" src="https://cloud.githubusercontent.com/assets/6069066/14127348/21e6ed40-f628-11e5-9fa4-ed527bf35129.gif"> | <img width="212" src="https://cloud.githubusercontent.com/assets/6069066/14127346/21b9aaa6-f628-11e5-9bba-aaccab60fd69.gif"> | <img width="212" src="https://cloud.githubusercontent.com/assets/6069066/14127350/21eafe1c-f628-11e5-8ccd-a6b6873c046a.gif">
---- |--- |--- |--- |
-| `0 ms delay` | `500 ms delay` | `800 ms delay` | `1100 ms delay`
-| Well behaving system. The throughput is about 22 requests/second. Small number of active threads in Statistics service. The median service time is about 50 ms. | The number of active threads is growing. We can see purple number of thread-pool rejections and therefore about 30-40% of errors, but circuit is still closed. | Half-open state: the ratio of failed commands is more than 50%, the circuit breaker kicks in. After sleep window amount of time, the next request is let through. | 100 percent of the requests fail. The circuit is now permanently open. Retry after sleep time won't close circuit again, because the single request is too slow.
+| <img width="212" src="https://cloud.githubusercontent.com/assets/6069066/14127349/21e90026-f628-11e5-83f1-60108cb33490.gif">                                    | <img width="212" src="https://cloud.githubusercontent.com/assets/6069066/14127348/21e6ed40-f628-11e5-9fa4-ed527bf35129.gif">                                   | <img width="212" src="https://cloud.githubusercontent.com/assets/6069066/14127346/21b9aaa6-f628-11e5-9bba-aaccab60fd69.gif">                                      | <img width="212" src="https://cloud.githubusercontent.com/assets/6069066/14127350/21eafe1c-f628-11e5-8ccd-a6b6873c046a.gif">                                     |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `0 ms delay`                                                                                                                                                    | `500 ms delay`                                                                                                                                                 | `800 ms delay`                                                                                                                                                    | `1100 ms delay`                                                                                                                                                  |
+| Well behaving system. The throughput is about 22 requests/second. Small number of active threads in Statistics service. The median service time is about 50 ms. | The number of active threads is growing. We can see purple number of thread-pool rejections and therefore about 30-40% of errors, but circuit is still closed. | Half-open state: the ratio of failed commands is more than 50%, the circuit breaker kicks in. After sleep window amount of time, the next request is let through. | 100 percent of the requests fail. The circuit is now permanently open. Retry after sleep time won't close circuit again, because the single request is too slow. |
 
 ### Log analysis
 
@@ -255,3 +255,5 @@ Also, Service Discovery mechanism needs some time after all applications startup
 ## Feedback welcome
 
 PiggyMetrics is open source, and would greatly appreciate your help. Feel free to contact me with any questions.
+
+test
