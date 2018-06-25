@@ -7,13 +7,13 @@
 //       }
 //     }
 
-//     environment {
-//       CONFIG_SERVICE_PASSWORD=credentials("CONFIG_SERVICE_PASSWORD")
-//       NOTIFICATION_SERVICE_PASSWORD=credentials("NOTIFICATION_SERVICE_PASSWORD")
-//       STATISTICS_SERVICE_PASSWORD=credentials("STATISTICS_SERVICE_PASSWORD")
-//       ACCOUNT_SERVICE_PASSWORD=credentials("ACCOUNT_SERVICE_PASSWORD")
-//       MONGODB_PASSWORD=credentials("MONGODB_PASSWORD")
-//     }
+    // environment {
+    //   CONFIG_SERVICE_PASSWORD=credentials("CONFIG_SERVICE_PASSWORD")
+    //   NOTIFICATION_SERVICE_PASSWORD=credentials("NOTIFICATION_SERVICE_PASSWORD")
+    //   STATISTICS_SERVICE_PASSWORD=credentials("STATISTICS_SERVICE_PASSWORD")
+    //   ACCOUNT_SERVICE_PASSWORD=credentials("ACCOUNT_SERVICE_PASSWORD")
+    //   MONGODB_PASSWORD=credentials("MONGODB_PASSWORD")
+    // }
 //     stages {
 
 //       stage('SCM checkout') {
@@ -53,6 +53,14 @@ node {
     def mvnHome = tool name:'maven-3', type: 'maven'
     def mvnCMD = "${mvnHome}/bin/mvn"
     sh "${mvnCMD} clean package"
+  }
+
+  environment {
+    CONFIG_SERVICE_PASSWORD=credentials("CONFIG_SERVICE_PASSWORD")
+    NOTIFICATION_SERVICE_PASSWORD=credentials("NOTIFICATION_SERVICE_PASSWORD")
+    STATISTICS_SERVICE_PASSWORD=credentials("STATISTICS_SERVICE_PASSWORD")
+    ACCOUNT_SERVICE_PASSWORD=credentials("ACCOUNT_SERVICE_PASSWORD")
+    MONGODB_PASSWORD=credentials("MONGODB_PASSWORD")
   }
 
   stage('Build docker images') {
