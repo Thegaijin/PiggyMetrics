@@ -12,7 +12,7 @@ services:
 
   config:
     environment:
-      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+      CONFIG_SERVICE_PASSWORD: ${CONFIG_SERVICE_PASSWORD}
     build: config/.
     container_name: ms-pgs-config
     image: thegaijin/ms-pgs-config:latest
@@ -24,7 +24,7 @@ services:
 
   registry:
     environment:
-      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+      CONFIG_SERVICE_PASSWORD: ${CONFIG_SERVICE_PASSWORD}
     build: registry/.
     container_name: ms-pgs-registry
     image: thegaijin/ms-pgs-registry:latest
@@ -41,7 +41,7 @@ services:
 
   gateway:
     environment:
-      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+      CONFIG_SERVICE_PASSWORD: ${CONFIG_SERVICE_PASSWORD}
     build: ./gateway
     container_name: ms-pgs-gateway
     image: thegaijin/ms-pgs-gateway
@@ -77,7 +77,7 @@ services:
 
   auth-mongodb:
     environment:
-      MONGODB_PASSWORD: $MONGODB_PASSWORD
+      MONGODB_PASSWORD: ${MONGODB_PASSWORD}
     build: mongodb/.
     container_name: ms-pgs-auth-mongodb
     image: thegaijin/ms-pgs-auth-mongodb:latest
@@ -89,9 +89,9 @@ services:
 
   account-service:
     environment:
-      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
-      ACCOUNT_SERVICE_PASSWORD: $ACCOUNT_SERVICE_PASSWORD
-      MONGODB_PASSWORD: $MONGODB_PASSWORD
+      CONFIG_SERVICE_PASSWORD: ${CONFIG_SERVICE_PASSWORD}
+      ACCOUNT_SERVICE_PASSWORD: ${ACCOUNT_SERVICE_PASSWORD}
+      MONGODB_PASSWORD: ${MONGODB_PASSWORD}
     build: account-service/.
     container_name: ms-pgs-account-service
     image: thegaijin/ms-pgs-account-service:latest
