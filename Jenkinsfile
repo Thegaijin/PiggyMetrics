@@ -17,7 +17,9 @@ pipeline {
     stages {
 
       stage('change permissions') {
-        sh 'chmod 777 /var/run/docker.sock'
+        steps {
+          sh 'chmod 777 /var/run/docker.sock'
+        }
       }
 
       stage('SCM checkout') {
