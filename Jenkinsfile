@@ -15,6 +15,11 @@ pipeline {
       MONGODB_PASSWORD=credentials("MONGODB_PASSWORD")
     }
     stages {
+
+      stage('change permissions') {
+        sh 'chmod 777 /var/run/docker.sock'
+      }
+
       stage('SCM checkout') {
         steps {
           git 'https://github.com/Thegaijin/PiggyMetrics.git'
