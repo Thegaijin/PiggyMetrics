@@ -15,9 +15,10 @@ pipeline {
       MONGODB_PASSWORD=credentials("MONGODB_PASSWORD")
     }
     stages {
-
       stage('SCM checkout') {
-        git 'https://github.com/Thegaijin/PiggyMetrics.git'
+        steps {
+          git 'https://github.com/Thegaijin/PiggyMetrics.git'
+        }
       }
 
       stage('compiler, tester, packager') {
@@ -29,17 +30,23 @@ pipeline {
       }
 
       stage('Build docker images') {
-        sh 'docker-compose -f docker-compose.yml -f docker-compose.dev.yml up'
+        steps {
+          sh 'docker-compose -f docker-compose.yml -f docker-compose.dev.yml up'
+        }
       }
 
       stage('login to dockerhub') {
-        withCredentials([string(credentialsId: 'docker-pwd', variable: 'dockerhubpwd')]) {
-        sh 'docker login -u thegaijin -p ${dockerhubpwd}'
+        steps {
+          withCredentials([string(credentialsId: 'docker-pwd', variable: 'dockerhubpwd')]) {
+          sh 'docker login -u thegaijin -p ${dockerhubpwd}'
+          }
         }
       }
 
       stage('Push images to dockerhub') {
-        sh 'docker-compose push'
+        steps {
+          sh 'docker-compose push'
+        }
       }
     }
 }
