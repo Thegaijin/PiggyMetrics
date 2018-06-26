@@ -2,8 +2,7 @@ pipeline {
 
     agent {
       docker {
-        image 'thegaijin/jenkins-docker'
-        sh 'chmod 777 /var/run/docker.sock'
+        image 'thegaijin/jenkins-java-docker'
         args '-v /usr/local/bundle:/usr/local/bundle -v /run/docker.sock:/var/run/docker.sock'
       }
     }
