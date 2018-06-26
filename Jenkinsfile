@@ -3,6 +3,7 @@ pipeline {
     agent {
       docker {
         image 'thegaijin/jenkins-docker'
+        sh 'chmod 777 /var/run/docker.sock'
         args '-v /usr/local/bundle:/usr/local/bundle -v /run/docker.sock:/var/run/docker.sock'
       }
     }
@@ -15,12 +16,6 @@ pipeline {
       MONGODB_PASSWORD=credentials("MONGODB_PASSWORD")
     }
     stages {
-
-      stage('change permissions') {
-        steps {
-          sh 'chmod 777 /var/run/docker.sock'
-        }
-      }
 
       stage('SCM checkout') {
         steps {
