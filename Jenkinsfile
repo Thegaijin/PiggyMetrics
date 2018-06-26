@@ -21,34 +21,34 @@ pipeline {
         }
       }
 
-      stage('compiler, tester, packager') {
-        steps {
-          def mvnHome = tool name:'maven-3', type: 'maven'
-          def mvnCMD = "${mvnHome}/bin/mvn"
-          sh "${mvnCMD} clean package"
-        }
-      }
+    //   stage('compiler, tester, packager') {
+    //     steps {
+    //       def mvnHome = tool name:'maven-3', type: 'maven'
+    //       def mvnCMD = "${mvnHome}/bin/mvn"
+    //       sh "${mvnCMD} clean package"
+    //     }
+    //   }
 
-      stage('Build docker images') {
-        steps {
-          sh 'docker-compose -f docker-compose.yml -f docker-compose.dev.yml up'
-        }
-      }
+    //   stage('Build docker images') {
+    //     steps {
+    //       sh 'docker-compose -f docker-compose.yml -f docker-compose.dev.yml up'
+    //     }
+    //   }
 
-      stage('login to dockerhub') {
-        steps {
-          withCredentials([string(credentialsId: 'docker-pwd', variable: 'dockerhubpwd')]) {
-          sh 'docker login -u thegaijin -p ${dockerhubpwd}'
-          }
-        }
-      }
+    //   stage('login to dockerhub') {
+    //     steps {
+    //       withCredentials([string(credentialsId: 'docker-pwd', variable: 'dockerhubpwd')]) {
+    //       sh 'docker login -u thegaijin -p ${dockerhubpwd}'
+    //       }
+    //     }
+    //   }
 
-      stage('Push images to dockerhub') {
-        steps {
-          sh 'docker-compose push'
-        }
-      }
-    }
+    //   stage('Push images to dockerhub') {
+    //     steps {
+    //       sh 'docker-compose push'
+    //     }
+    //   }
+    // }
 }
 
 // node {
