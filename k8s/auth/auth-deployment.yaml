@@ -1,46 +1,26 @@
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: account-service
-  labels:
-    app: pgs-acc
-spec:
-  selector:
-    app: pgs-acc
-  ports:
-    - name: port1
-      port: 6000
-      protocol: TCP
-      targetPort: 6000
-    - name: port2
-      port: 27017
-      protocol: TCP
-      targetPort: 27017
-  type: NodePort
-
----
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: account-ms-deployment
+  name: auth-ms-deployment
   labels:
-    run: pgs-acc
+    app: piggymetrics
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        run: pgs-acc
+        app: piggymetrics
+        service: auth-service
     spec:
       containers:
-        - name: ms-pgs-account-service
-          image: thegaijin/ms-pgs-account-service
+        - name: ms-pgs-auth-service
+          image: thegaijin/ms-pgs-auth-service
           ports:
-          - containerPort: 6000
+          - containerPort: 5000
             protocol: TCP
-        - name: ms-pgs-account-mongodb
-          image: thegaijin/ms-pgs-account-mongodb
+        - name: ms-pgs-auth-mongodb
+          image: thegaijin/ms-pgs-auth-mongodb
           ports:
           - containerPort: 27017
             protocol: TCP
@@ -50,7 +30,17 @@ spec:
                 secretKeyRef:
                   name: ms-credentials
                   key: password
+            - name: STATISTICS_SERVICE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: ms-credentials
+                  key: password
             - name: CONFIG_SERVICE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: ms-credentials
+                  key: password
+            - name: NOTIFICATION_SERVICE_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: ms-credentials

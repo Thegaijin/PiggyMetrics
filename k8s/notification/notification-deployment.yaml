@@ -1,37 +1,17 @@
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: notification-service
-  labels:
-    app: pgs-notify
-spec:
-  selector:
-    app: pgs-notify
-  ports:
-    - name: port1
-      port: 8000
-      protocol: TCP
-      targetPort: 8000
-    - name: port2
-      port: 27017
-      protocol: TCP
-      targetPort: 27017
-  type: NodePort
-
----
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: notification-ms-deployment
   labels:
-    run: pgs-notify
+    app: piggymetrics
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        run: pgs-notify
+        app: piggymetrics
+        service: notification-service
     spec:
       containers:
         - name: ms-pgs-notification-service
