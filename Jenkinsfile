@@ -26,6 +26,9 @@ pipeline {
       }
 
       stage('compile, test, package') {
+        tools {
+          maven "maven3.5.4"
+        }
         steps {
           sh 'mvn clean package'
         }
