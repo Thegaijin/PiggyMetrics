@@ -28,7 +28,6 @@ pipeline {
         }
 
         steps {
-          echo "This time, the Maven version should be 3.3.9"
           def mvnHome = tool name:'maven-3', type: 'maven'
           def mvnCMD = "${mvnHome}/bin/mvn"
           sh 'mvn clean package'
