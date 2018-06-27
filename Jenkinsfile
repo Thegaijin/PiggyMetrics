@@ -22,7 +22,7 @@ pipeline {
       stage('SCM checkout') {
         steps {
           git 'https://github.com/Thegaijin/PiggyMetrics.git'
-          String mvnHome = tool 'M3'
+          String mvnHome = tool("M3");
           sh "${mvnHome}/bin/mvn -B verify"
         }
       }
