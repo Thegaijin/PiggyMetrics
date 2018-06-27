@@ -38,8 +38,8 @@ pipeline {
           }
         }
     }
-  }
 }
+
       //       stage('check maven') {
       //   steps {
       //     withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
