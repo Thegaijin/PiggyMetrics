@@ -6,10 +6,9 @@ pipeline {
         args '-v /usr/local/bundle:/usr/local/bundle -v /run/docker.sock:/var/run/docker.sock'
       }
     }
-
-      tools {
-        maven "maven3.3.9"
-      }
+      // tools {
+      //   maven "maven3.3.9"
+      // }
 
     environment {
       CONFIG_SERVICE_PASSWORD=credentials("CONFIG_SERVICE_PASSWORD")
@@ -23,7 +22,7 @@ pipeline {
       stage('SCM checkout') {
         steps {
           git 'https://github.com/Thegaijin/PiggyMetrics.git'
-          def mvnHome = tool 'maven3.3.9'
+          def mvnHome = tool 'M3'
           sh "${mvnHome}/bin/mvn -B verify"
         }
       }
