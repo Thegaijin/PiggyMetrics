@@ -22,12 +22,8 @@ pipeline {
       stage('SCM checkout') {
         steps {
           git 'https://github.com/Thegaijin/PiggyMetrics.git'
-          def mvnHome = tool 'M3'
-          env.PATH = "${mvnHome}/bin:${env.PATH}"
-          sh "${mvnHome}/bin/mvn -B verify"
         }
       }
-
       stage('check maven') {
         // tools {
         //   maven "maven3.3.9"
