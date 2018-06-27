@@ -31,8 +31,6 @@ pipeline {
         }
         steps {
           echo "This time, the Maven version should be 3.3.9"
-          def MAVEN=/usr/share/maven
-          def PATH=$M2_HOME/bin
           sh "mvn -version"
         }
         // steps {
@@ -42,7 +40,7 @@ pipeline {
 
       stage('test, package') {
         steps {
-          withEnv( ["PATH+MAVEN=${tool maven}/bin/mvn/"] ) {
+          withEnv( ["PATH+MAVEN=${tool maven}/bin/"] ) {
             sh 'mvn clean package'
           }
         }
