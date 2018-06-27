@@ -29,8 +29,12 @@ pipeline {
         tools {
           maven "maven3.3.9"
         }
+
         steps {
-          sh 'mvn clean package'
+          def mvn_version = 'maven3.3.9'
+          withEnv( ["PATH+MAVEN=${tool mvn_version}/bin/mvn/"] ) {
+            sh 'mvn clean package'
+          }
         }
       }
     }
