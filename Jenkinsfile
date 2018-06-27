@@ -27,6 +27,22 @@ pipeline {
           sh "${mvnHome}/bin/mvn -B verify"
         }
       }
+
+      stage('check maven') {
+        // tools {
+        //   maven "maven3.3.9"
+        // }
+        steps {
+          // def mvnHome = tool 'M3'
+          // env.PATH = "${mvnHome}/bin:${env.PATH}"
+          // sh "${mvnHome}/bin/mvn -B verify"
+          // echo "This time, the Maven version should be 3.3.9"
+          // sh "mvn -version"
+          withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
+            sh 'mvn -B verify'
+          }
+        }
+      }
     }
 }
 
