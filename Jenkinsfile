@@ -7,9 +7,9 @@ pipeline {
       }
     }
 
-    // tools {
-    //   maven 'maven-3'
-    // }
+    tools {
+      maven 'maven-3'
+    }
 
     environment {
       CONFIG_SERVICE_PASSWORD=credentials("CONFIG_SERVICE_PASSWORD")
