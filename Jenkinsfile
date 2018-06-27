@@ -7,9 +7,9 @@ pipeline {
       }
     }
 
-    tools {
-      maven 'maven-3'
-    }
+    // tools {
+    //   maven 'maven-3'
+    // }
 
     environment {
       CONFIG_SERVICE_PASSWORD=credentials("CONFIG_SERVICE_PASSWORD")
@@ -29,11 +29,11 @@ pipeline {
       stage('compile, test, package') {
 
         steps {
-          sh 'mvn clean package'
-          // def mvn_version = 'maven-3'
-          // withEnv( ["PATH+MAVEN=${tool mvn_version}/bin"] ) {
-          //   sh "mvn clean package"
-          // }
+          // sh 'mvn clean package'
+          def mvn_version = 'maven-3'
+          withEnv( ["PATH+MAVEN=${tool mvn_version}/bin"] ) {
+            sh 'mvn clean package'
+          }
           // def mvnHome = tool name: 'maven-3', type: 'maven'
           // def mvnCMD = "${mvnHome}/bin/mvn"
           // sh 'mvn clean package'
