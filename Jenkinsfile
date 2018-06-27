@@ -26,7 +26,7 @@ pipeline {
           //   sh 'mvn -B verify'
           // }
           script {
-            def mvnHome = tool 'M3'
+            def mvnHome = tool "M3"
             echo "this is ${mvnHome}"
             sh "${mvnHome}/bin/mvn -B verify"
           }
