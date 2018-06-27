@@ -20,8 +20,15 @@ pipeline {
         }
       }
       stage('Add maven') {
+        steps {
           env.PATH = "${tool 'M3'}/bin:${env.PATH}"
+          configFileProvider(
+              [configFile(fileId: 'maven-settings', variable: 'MAVEN_SETTINGS')]) {
+              sh 'mvn -s $MAVEN_SETTINGS clean package'
+          }
+        }
       }
+
 
       // stage('compiler, tester, packager') {
       //   sh 'mvn clean package'
