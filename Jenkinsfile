@@ -29,8 +29,10 @@ pipeline {
         // tools {
         //   maven "maven3.3.9"
         // }
-        echo "This time, the Maven version should be 3.3.9"
-        sh "mvn -version"
+        steps {
+          echo "This time, the Maven version should be 3.3.9"
+          sh "mvn -version"
+        }
         // steps {
         // def maven = 'maven3.3.9'
         // }
