@@ -11,10 +11,6 @@ pipeline {
         maven "maven3.3.9"
       }
 
-    define {
-      def mvnHome = tool 'maven3.3.9'
-    }
-
     environment {
       CONFIG_SERVICE_PASSWORD=credentials("CONFIG_SERVICE_PASSWORD")
       NOTIFICATION_SERVICE_PASSWORD=credentials("NOTIFICATION_SERVICE_PASSWORD")
@@ -27,6 +23,8 @@ pipeline {
       stage('SCM checkout') {
         steps {
           git 'https://github.com/Thegaijin/PiggyMetrics.git'
+          def mvnHome = tool 'maven3.3.9'
+          sh "${mvnHome}/bin/mvn -B verify"
         }
       }
 
@@ -40,14 +38,14 @@ pipeline {
       //   }
       // }
 
-      stage('compile, test, package') {
-        steps {
-          echo "WTF"
+      // stage('compile, test, package') {
+      //   steps {
+      //     echo "WTF"
 
-          sh "${mvnHome}/bin/mvn clean package"
-          }
-        }
-      }
+      //     sh "${mvnHome}/bin/mvn clean package"
+      //     }
+      //   }
+      // }
 
     // sh 'mvn clean package'
         // tools {
