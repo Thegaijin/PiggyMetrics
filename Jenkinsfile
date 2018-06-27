@@ -24,13 +24,14 @@ pipeline {
 
       stage('compile, test, package') {
         tools {
-          maven "maven-3"
+          maven 'maven-3'
         }
         steps {
-          def mvn_version = 'maven-3'
-          withEnv( ["PATH+MAVEN=${tool mvn_version}/bin"] ) {
-            sh "mvn clean package"
-          }
+          sh 'mvn clean package'
+          // def mvn_version = 'maven-3'
+          // withEnv( ["PATH+MAVEN=${tool mvn_version}/bin"] ) {
+          //   sh "mvn clean package"
+          // }
           // def mvnHome = tool name: 'maven-3', type: 'maven'
           // def mvnCMD = "${mvnHome}/bin/mvn"
           // sh 'mvn clean package'
