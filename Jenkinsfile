@@ -27,9 +27,9 @@ pipeline {
         //   maven 'maven-3"
         // }
         steps {
-          def mvn_version = 'maven-3'
+          def mvn_version = "maven-3"
           withEnv( ["PATH+MAVEN=${tool mvn_version}/bin"] ) {
-          sh 'mvn clean package'
+          sh "mvn clean package"
           }
           // def mvnHome = tool name: 'maven-3', type: 'maven'
           // def mvnCMD = "${mvnHome}/bin/mvn"
