@@ -40,8 +40,8 @@ pipeline {
 
       stage('test, package') {
         steps {
-          withEnv( ["PATH+MAVEN=${tool maven}/bin/"] ) {
-            sh 'mvn clean package'
+          def mvnHome = tool "maven3.3.9"
+          sh "${mvnHome}/bin/mvn clean package"
           }
         }
       }
