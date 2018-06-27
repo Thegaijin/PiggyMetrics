@@ -31,7 +31,7 @@ pipeline {
         }
 
         steps {
-          def mvn_version = 'maven3.3.9'
+          // def mvn_version = 'maven3.3.9'
           withEnv( ["PATH+MAVEN=${tool mvn_version}/bin/mvn/"] ) {
             sh 'mvn clean package'
           }
