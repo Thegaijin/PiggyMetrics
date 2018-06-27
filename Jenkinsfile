@@ -25,6 +25,7 @@ pipeline {
           // withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
           //   sh 'mvn -B verify'
           // }
+
           script {
             def mvnHome = tool "M3"
             echo "this is ${mvnHome}"
