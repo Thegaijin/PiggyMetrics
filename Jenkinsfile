@@ -6,9 +6,6 @@ pipeline {
         args '-v /usr/local/bundle:/usr/local/bundle -v /run/docker.sock:/var/run/docker.sock'
       }
     }
-    tools {
-        maven 'M3'
-    }
     environment {
       CONFIG_SERVICE_PASSWORD=credentials("CONFIG_SERVICE_PASSWORD")
       NOTIFICATION_SERVICE_PASSWORD=credentials("NOTIFICATION_SERVICE_PASSWORD")
@@ -20,23 +17,15 @@ pipeline {
       stage('SCM checkout') {
         steps {
           git url: 'https://github.com/Thegaijin/PiggyMetrics.git'
-          // withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
-          //   sh 'mvn -B verify'
-          // }
-
-          script {
-            // def mvn_version = "M3"
-            // echo  "This is the mvn version ${mvn_version}"
-            // withEnv( ["PATH+MAVEN=${tool mvn_version}/bin"] ) {
-            //   echo "PATH+MAVEN=${tool mvn_version}/bin"
-            //   //sh "mvn clean package"
-            //   sh "mvn -B verify"
-            def mvnHome = tool name: 'M3', type: 'maven'
-            def mvnCMD = "${mvnHome}/bin/mvn"
-            sh 'mvn clean package'
-            }
-          }
         }
+      }
+      stage('Add maven') {
+          env.PATH = "${tool 'M3'}/bin:${env.PATH}"
+      }
+
+      stage('compiler, tester, packager') {
+        sh 'mvn clean package'
+      }
     }
 }
 
