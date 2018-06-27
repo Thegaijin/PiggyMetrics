@@ -26,16 +26,16 @@ pipeline {
             sh 'mvn -B verify'
           }
         }
-      // stage('check maven') {
+    }
+  }
+}
+      //       stage('check maven') {
       //   steps {
       //     withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
       //       sh 'mvn -B verify'
       //     }
       //   }
       // }
-    }
-}
-
 
       // stage('check maven') {
       //   // tools {
