@@ -6,8 +6,13 @@ pipeline {
         args '-v /usr/local/bundle:/usr/local/bundle -v /run/docker.sock:/var/run/docker.sock'
       }
     }
-    tools {
+
+      tools {
         maven "maven3.3.9"
+      }
+
+    define {
+      def mvnHome = tool 'maven3.3.9'
     }
 
     environment {
@@ -25,20 +30,20 @@ pipeline {
         }
       }
 
-      stage('check maven') {
-        // tools {
-        //   maven "maven3.3.9"
-        // }
-        steps {
-          echo "This time, the Maven version should be 3.3.9"
-          sh "mvn -version"
-        }
-      }
+      // stage('check maven') {
+      //   // tools {
+      //   //   maven "maven3.3.9"
+      //   // }
+      //   steps {
+      //     echo "This time, the Maven version should be 3.3.9"
+      //     sh "mvn -version"
+      //   }
+      // }
 
       stage('compile, test, package') {
         steps {
           echo "WTF"
-          def mvnHome = tool 'maven3.3.9'
+
           sh "${mvnHome}/bin/mvn clean package"
           }
         }
