@@ -31,7 +31,7 @@ pipeline {
         // }
 
         steps {
-          def maven = 'maven3.3.9'
+        def maven = 'maven3.3.9'
         }
       }
 
