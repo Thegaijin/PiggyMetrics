@@ -23,10 +23,16 @@ pipeline {
       }
 
       stage('compile, test, package') {
+        tools {
+        maven "mvn3.5.4"
+        }
+
         steps {
-          def mvnHome = tool name:'maven-3', type: 'maven'
-          def mvnCMD = "${mvnHome}/bin/mvn"
-          sh "${mvnCMD} clean package"
+          echo "This time, the Maven version should be 3.3.9"
+          sh "mvn -version"
+          // def mvnHome = tool name:'maven-3', type: 'maven'
+          // def mvnCMD = "${mvnHome}/bin/mvn"
+          // sh "${mvnCMD} clean package"
         }
       }
     }
