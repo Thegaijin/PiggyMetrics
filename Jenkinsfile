@@ -25,13 +25,18 @@ pipeline {
         }
       }
 
-      stage('compile, test, package') {
+      stage('compile') {
         tools {
           maven "maven3.3.9"
         }
 
         steps {
           def maven = 'maven3.3.9'
+        }
+      }
+
+      stage('test, package') {
+        steps {
           withEnv( ["PATH+MAVEN=${tool maven}/bin/mvn/"] ) {
             sh 'mvn clean package'
           }
