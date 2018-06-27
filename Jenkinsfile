@@ -33,7 +33,6 @@ pipeline {
               //sh "mvn clean package"
               sh "mvn -B verify"
             }
-
           }
         }
     }
