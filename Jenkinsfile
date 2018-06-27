@@ -24,7 +24,7 @@ pipeline {
 
       stage('compile, test, package') {
         tools {
-        maven "mvn3.5.4"
+        maven "maven-3"
         }
 
         steps {
