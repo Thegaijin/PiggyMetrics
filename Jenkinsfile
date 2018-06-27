@@ -61,8 +61,6 @@ pipeline {
         //   sh 'mvn clean package'
         // }
 
-
-
     //   stage('Build docker images') {
     //     steps {
     //       sh 'docker-compose -f docker-compose.yml -f docker-compose.dev.yml up'
