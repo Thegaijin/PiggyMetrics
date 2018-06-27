@@ -23,9 +23,9 @@ pipeline {
           env.PATH = "${tool 'M3'}/bin:${env.PATH}"
       }
 
-      stage('compiler, tester, packager') {
-        sh 'mvn clean package'
-      }
+      // stage('compiler, tester, packager') {
+      //   sh 'mvn clean package'
+      // }
     }
 }
 
