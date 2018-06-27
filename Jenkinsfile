@@ -26,7 +26,10 @@ pipeline {
       }
 
       stage('compile, test, package') {
-        sh 'mvn clean package'
+        steps {
+          sh 'mvn clean package'
+        }
+        // sh 'mvn clean package'
         // tools {
         //   maven 'maven-3"
         // }
