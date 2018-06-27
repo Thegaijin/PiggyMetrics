@@ -26,7 +26,8 @@ pipeline {
           sh "${mvnHome}/bin/mvn -B verify"
         }
       }
-
+    }
+}
       // stage('check maven') {
       //   // tools {
       //   //   maven "maven3.3.9"
