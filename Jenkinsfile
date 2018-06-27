@@ -6,7 +6,9 @@ pipeline {
         args '-v /usr/local/bundle:/usr/local/bundle -v /run/docker.sock:/var/run/docker.sock'
       }
     }
-
+    tools {
+        maven 'M3'
+    }
     environment {
       CONFIG_SERVICE_PASSWORD=credentials("CONFIG_SERVICE_PASSWORD")
       NOTIFICATION_SERVICE_PASSWORD=credentials("NOTIFICATION_SERVICE_PASSWORD")
@@ -23,12 +25,15 @@ pipeline {
           // }
 
           script {
-            def mvn_version = "M3"
-            echo  "This is the mvn version ${mvn_version}"
-            withEnv( ["PATH+MAVEN=${tool mvn_version}/bin"] ) {
-              echo "PATH+MAVEN=${tool mvn_version}/bin"
-              //sh "mvn clean package"
-              sh "/usr/share/maven/bin/mvn -B verify"
+            // def mvn_version = "M3"
+            // echo  "This is the mvn version ${mvn_version}"
+            // withEnv( ["PATH+MAVEN=${tool mvn_version}/bin"] ) {
+            //   echo "PATH+MAVEN=${tool mvn_version}/bin"
+            //   //sh "mvn clean package"
+            //   sh "mvn -B verify"
+            def mvnHome = tool name: 'M3', type: 'maven'
+            def mvnCMD = "${mvnHome}/bin/mvn"
+            sh 'mvn clean package'
             }
           }
         }
