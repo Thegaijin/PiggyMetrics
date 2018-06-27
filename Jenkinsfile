@@ -26,9 +26,9 @@ pipeline {
       }
 
       stage('compile') {
-        tools {
-          maven "maven3.3.9"
-        }
+        // tools {
+        //   maven "maven3.3.9"
+        // }
 
         steps {
           def maven = 'maven3.3.9'
