@@ -21,15 +21,15 @@ pipeline {
           git 'https://github.com/Thegaijin/PiggyMetrics.git'
         }
       }
-    }
-    //   stage('compiler, tester, packager') {
-    //     steps {
-    //       def mvnHome = tool name:'maven-3', type: 'maven'
-    //       def mvnCMD = "${mvnHome}/bin/mvn"
-    //       sh "${mvnCMD} clean package"
-    //     }
-    //   }
 
+      stage('compiler, tester, packager') {
+        steps {
+          def mvnHome = tool name:'maven-3', type: 'maven'
+          def mvnCMD = "${mvnHome}/bin/mvn"
+          sh "${mvnCMD} clean package"
+        }
+      }
+    }
     //   stage('Build docker images') {
     //     steps {
     //       sh 'docker-compose -f docker-compose.yml -f docker-compose.dev.yml up'
