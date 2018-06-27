@@ -25,7 +25,7 @@ pipeline {
         }
       }
 
-      stage('compile') {
+      stage('check maven') {
         tools {
           maven "maven3.3.9"
         }
@@ -33,12 +33,9 @@ pipeline {
           echo "This time, the Maven version should be 3.3.9"
           sh "mvn -version"
         }
-        // steps {
-        // def maven = 'maven3.3.9'
-        // }
       }
 
-      stage('test, package') {
+      stage('compile, test, package') {
         steps {
           def mvnHome = tool "maven3.3.9"
           sh "${mvnHome}/bin/mvn clean package"
