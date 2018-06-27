@@ -32,7 +32,7 @@ pipeline {
         steps {
           echo "This time, the Maven version should be 3.3.9"
           def MAVEN=/usr/share/maven
-          def PATH=$PATH:$M2_HOME/bin
+          def PATH=$M2_HOME/bin
           sh "mvn -version"
         }
         // steps {
