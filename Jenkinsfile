@@ -18,7 +18,6 @@ pipeline {
       MONGODB_PASSWORD=credentials("MONGODB_PASSWORD")
     }
     stages {
-
       stage('SCM checkout') {
         steps {
           git url: 'https://github.com/Thegaijin/PiggyMetrics.git'
