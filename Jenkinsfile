@@ -25,8 +25,10 @@ pipeline {
           // withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
           //   sh 'mvn -B verify'
           // }
-          mvnHome = tool 'M3'
-          sh "${mvnHome}/bin/mvn -B verify"
+          script {
+            def mvnHome = tool 'M3'
+            sh "${mvnHome}/bin/mvn -B verify"
+          }
         }
     }
   }
