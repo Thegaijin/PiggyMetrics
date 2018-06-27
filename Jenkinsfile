@@ -23,21 +23,9 @@ pipeline {
       }
 
       stage('compiler') {
-        steps {
           def mvnHome = tool name:'maven-3', type: 'maven'
-        }
-      }
-
-      stage('tester') {
-        steps {
           def mvnCMD = "${mvnHome}/bin/mvn"
-        }
-      }
-
-      stage('packager') {
-        steps {
           sh "${mvnCMD} clean package"
-        }
       }
     }
     //   stage('Build docker images') {
