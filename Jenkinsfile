@@ -19,27 +19,26 @@ pipeline {
           git url: 'https://github.com/Thegaijin/PiggyMetrics.git'
         }
       }
-      stage('Add maven') {
-        steps {
-          env.PATH = "${tool 'M3'}/bin:${env.PATH}"
-        }
-      }
+      // stage('Add maven') {
+      //   steps {
+      //     env.PATH = "${tool 'M3'}/bin:${env.PATH}"
+      //   }
+      // }
 
-      stage('Configure file path') {
-        steps {
-          configFileProvider(
-              [configFile(fileId: 'maven-settings', variable: 'MAVEN_SETTINGS')]) {
-              sh 'mvn -s $MAVEN_SETTINGS clean package'
-          }
-        }
-      }
+      // stage('Configure file path') {
+      //   steps {
+      //     configFileProvider(
+      //         [configFile(fileId: 'maven-settings', variable: 'MAVEN_SETTINGS')]) {
+      //         sh 'mvn -s $MAVEN_SETTINGS clean package'
+      //     }
+      //   }
+      // }
 
 
       // stage('compiler, tester, packager') {
       //   sh 'mvn clean package'
       // }
-    }
-}
+
 
       //       stage('check maven') {
       //   steps {
@@ -82,27 +81,25 @@ pipeline {
         //   sh 'mvn clean package'
         // }
 
-    //   stage('Build docker images') {
-    //     steps {
-    //       sh 'docker-compose -f docker-compose.yml -f docker-compose.dev.yml up'
-    //     }
-    //   }
+      stage('Build docker images') {
+        steps {
+          sh 'docker-compose -f docker-compose.yml -f docker-compose.dev.yml up'
+        }
+      }
 
-    //   stage('login to dockerhub') {
-    //     steps {
-    //       withCredentials([string(credentialsId: 'docker-pwd', variable: 'dockerhubpwd')]) {
-    //       sh 'docker login -u thegaijin -p ${dockerhubpwd}'
-    //       }
-    //     }
-    //   }
+      stage('login to dockerhub') {
+        steps {
+          withCredentials([string(credentialsId: 'docker-pwd', variable: 'dockerhubpwd')]) {
+          sh 'docker login -u thegaijin -p ${dockerhubpwd}'
+          }
+        }
+      }
 
-    //   stage('Push images to dockerhub') {
-    //     steps {
-    //       sh 'docker-compose push'
-    //     }
-    //   }
-    // }
-
+      stage('Push images to dockerhub') {
+        steps {
+          sh 'docker-compose push'
+        }
+      }
 
 // node {
 //   stage('SCM checkout') {
@@ -138,3 +135,5 @@ pipeline {
 //   }
 
 // }
+    }
+}
