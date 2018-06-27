@@ -28,7 +28,8 @@ pipeline {
         }
 
         steps {
-          // def mvnHome = tool name:'maven-3', type: 'maven'
+          def mvnHome = tool name:'maven-3', type: 'maven'
+          echo "mvnHome"
           // def mvnCMD = "${mvnHome}/bin/mvn"
           sh 'mvn clean package'
         }
