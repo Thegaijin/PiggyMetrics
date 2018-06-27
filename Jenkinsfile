@@ -6,9 +6,6 @@ pipeline {
         args '-v /usr/local/bundle:/usr/local/bundle -v /run/docker.sock:/var/run/docker.sock'
       }
     }
-      // tools {
-      //   maven "maven3.3.9"
-      // }
 
     environment {
       CONFIG_SERVICE_PASSWORD=credentials("CONFIG_SERVICE_PASSWORD")
@@ -27,6 +24,7 @@ pipeline {
 
           script {
             def mvn_version = "M3"
+            echo  "This is the mvn version ${mvn_version}"
             withEnv( ["PATH+MAVEN=${tool mvn_version}/bin"] ) {
               echo "PATH+MAVEN=${tool mvn_version}/bin"
               //sh "mvn clean package"
