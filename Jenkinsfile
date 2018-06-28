@@ -131,7 +131,7 @@ node {
   }
 
   stage('Build docker images') {
-    sh 'docker-compose -f docker-compose.yml -f docker-compose.dev.yml up'
+    sh 'docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d'
   }
 
   stage('login to dockerhub') {
