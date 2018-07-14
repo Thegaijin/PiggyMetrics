@@ -1,11 +1,11 @@
 // pipeline {
 
-//     agent {
-//       docker {
-//         image 'thegaijin/jenkins-docker'
-//         args '-v /usr/local/bundle:/usr/local/bundle -v /run/docker.sock:/var/run/docker.sock'
-//       }
-//     }
+    // agent {
+    //   docker {
+    //     image 'thegaijin/jenkins-docker'
+    //     args '-v /usr/local/bundle:/usr/local/bundle -v /run/docker.sock:/var/run/docker.sock'
+    //   }
+    // }
 //     environment {
 //       CONFIG_SERVICE_PASSWORD=credentials("CONFIG_SERVICE_PASSWORD")
 //       NOTIFICATION_SERVICE_PASSWORD=credentials("NOTIFICATION_SERVICE_PASSWORD")
@@ -104,6 +104,14 @@
 // }
 
 node {
+
+  // agent {
+  //   docker {
+  //     image 'thegaijin/jenkins-docker'
+  //     args '-v /usr/local/bundle:/usr/local/bundle -v /run/docker.sock:/var/run/docker.sock'
+  //   }
+  // }
+
   stage('SCM checkout') {
     git 'https://github.com/Thegaijin/PiggyMetrics.git'
   }
