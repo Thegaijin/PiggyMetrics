@@ -132,7 +132,7 @@ stages {
       steps {
         // def mvnHome = tool name:'M3', type: 'maven'
         // def mvnCMD = "${mvnHome}/bin/mvn"
-        sh '${MAVEN_HOME}/bin/mvn clean package"
+        sh "${MAVEN_HOME}/bin/mvn clean package"
       }
     }
 
