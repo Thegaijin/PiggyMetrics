@@ -103,6 +103,17 @@
 //     }
 // }
 
+        // def mvnHome = tool name:'M3', type: 'maven'
+        // def mvnCMD = "${mvnHome}/bin/mvn"
+    // environment {
+    //   CONFIG_SERVICE_PASSWORD=credentials("CONFIG_SERVICE_PASSWORD")
+    //   NOTIFICATION_SERVICE_PASSWORD=credentials("NOTIFICATION_SERVICE_PASSWORD")
+    //   STATISTICS_SERVICE_PASSWORD=credentials("STATISTICS_SERVICE_PASSWORD")
+    //   ACCOUNT_SERVICE_PASSWORD=credentials("ACCOUNT_SERVICE_PASSWORD")
+    //   MONGODB_PASSWORD=credentials("MONGODB_PASSWORD")
+    // }
+
+
 pipeline {
 
   agent {
@@ -130,19 +141,9 @@ stages {
 
     stage('compiler, tester, packager') {
       steps {
-        // def mvnHome = tool name:'M3', type: 'maven'
-        // def mvnCMD = "${mvnHome}/bin/mvn"
         sh "${MAVEN_HOME}/bin/mvn clean package"
       }
-    }
-
-    // environment {
-    //   CONFIG_SERVICE_PASSWORD=credentials("CONFIG_SERVICE_PASSWORD")
-    //   NOTIFICATION_SERVICE_PASSWORD=credentials("NOTIFICATION_SERVICE_PASSWORD")
-    //   STATISTICS_SERVICE_PASSWORD=credentials("STATISTICS_SERVICE_PASSWORD")
-    //   ACCOUNT_SERVICE_PASSWORD=credentials("ACCOUNT_SERVICE_PASSWORD")
-    //   MONGODB_PASSWORD=credentials("MONGODB_PASSWORD")
-    // }
+      }
 
     stage('Build docker images') {
       steps {
