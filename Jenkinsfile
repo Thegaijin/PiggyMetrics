@@ -118,6 +118,7 @@ pipeline {
     STATISTICS_SERVICE_PASSWORD=123456789
     ACCOUNT_SERVICE_PASSWORD=123456789
     MONGODB_PASSWORD=123456789
+    MAVEN_HOME = tool('M3')
   }
 
 stages {
@@ -129,9 +130,9 @@ stages {
 
     stage('compiler, tester, packager') {
       steps {
-        def mvnHome = tool name:'M3', type: 'maven'
-        def mvnCMD = "${mvnHome}/bin/mvn"
-        sh "${mvnCMD} clean package"
+        // def mvnHome = tool name:'M3', type: 'maven'
+        // def mvnCMD = "${mvnHome}/bin/mvn"
+        sh '${MAVEN_HOME}/bin/mvn clean package"
       }
     }
 
