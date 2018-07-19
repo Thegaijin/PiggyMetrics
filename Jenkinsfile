@@ -114,13 +114,76 @@
     // }
 
 
-pipeline {
+// pipeline {
 
-  agent {
-    docker {
-      image 'thegaijin/jenkins-docker'
-      args '-v /usr/local/bundle:/usr/local/bundle -v /run/docker.sock:/var/run/docker.sock'
-    }
+//   agent {
+//     docker {
+//       image 'thegaijin/jenkins-docker'
+//       args '-v /usr/local/bundle:/usr/local/bundle -v /run/docker.sock:/var/run/docker.sock'
+//     }
+//   }
+
+//   environment {
+//     CONFIG_SERVICE_PASSWORD=123456789
+//     NOTIFICATION_SERVICE_PASSWORD=123456789
+//     STATISTICS_SERVICE_PASSWORD=123456789
+//     ACCOUNT_SERVICE_PASSWORD=123456789
+//     MONGODB_PASSWORD=123456789
+//     MAVEN_HOME = tool('M3')
+//   }
+
+// stages {
+//     stage('SCM checkout') {
+//       steps {
+//         git 'https://github.com/Thegaijin/PiggyMetrics.git'
+//       }
+//     }
+
+//     stage('compiler, tester, packager') {
+//       steps {
+//         sh "${MAVEN_HOME}/bin/mvn clean package"
+//       }
+//       }
+
+//     stage('Build docker images') {
+//       steps {
+//         sh 'docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d'
+//       }
+//     }
+
+//     stage('login to dockerhub') {
+//       steps {
+//         withCredentials([string(credentialsId: 'docker-pwd', variable: 'dockerhubpwd')]) {
+//           sh 'docker login -u thegaijin -p ${dockerhubpwd}'
+//         }
+//       }
+//     }
+
+//     stage('Push images to dockerhub') {
+//       steps{
+//         sh 'docker-compose push'
+//       }
+//     }
+//   }
+// }
+
+  // environment {
+  // CONFIG_SERVICE_PASSWORD=credentials("CONFIG_SERVICE_PASSWORD")
+  // NOTIFICATION_SERVICE_PASSWORD=credentials("NOTIFICATION_SERVICE_PASSWORD")
+  // STATISTICS_SERVICE_PASSWORD=credentials("STATISTICS_SERVICE_PASSWORD")
+  // ACCOUNT_SERVICE_PASSWORD=credentials("ACCOUNT_SERVICE_PASSWORD")
+  // MONGODB_PASSWORD=credentials("MONGODB_PASSWORD")
+  // }
+
+node {
+  stage('SCM checkout') {
+    git 'https://github.com/Thegaijin/PiggyMetrics.git'
+  }
+
+  stage('compiler, tester, packager') {
+    def mvnHome = tool name:'M3', type: 'maven'
+    def mvnCMD = "${mvnHome}/bin/mvn"
+    sh "${mvnCMD} clean package"
   }
 
   environment {
@@ -129,40 +192,19 @@ pipeline {
     STATISTICS_SERVICE_PASSWORD=123456789
     ACCOUNT_SERVICE_PASSWORD=123456789
     MONGODB_PASSWORD=123456789
-    MAVEN_HOME = tool('M3')
   }
 
-stages {
-    stage('SCM checkout') {
-      steps {
-        git 'https://github.com/Thegaijin/PiggyMetrics.git'
-      }
-    }
+  stage('Build docker images') {
+    sh 'docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d'
+  }
 
-    stage('compiler, tester, packager') {
-      steps {
-        sh "${MAVEN_HOME}/bin/mvn clean package"
-      }
-      }
-
-    stage('Build docker images') {
-      steps {
-        sh 'docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d'
-      }
+  stage('login to dockerhub') {
+    withCredentials([string(credentialsId: 'docker-pwd', variable: 'dockerhubpwd')]) {
+      sh 'docker login -u thegaijin -p ${dockerhubpwd}'
     }
+  }
 
-    stage('login to dockerhub') {
-      steps {
-        withCredentials([string(credentialsId: 'docker-pwd', variable: 'dockerhubpwd')]) {
-          sh 'docker login -u thegaijin -p ${dockerhubpwd}'
-        }
-      }
-    }
-
-    stage('Push images to dockerhub') {
-      steps{
-        sh 'docker-compose push'
-      }
-    }
+  stage('Push images to dockerhub') {
+    sh 'docker-compose push'
   }
 }

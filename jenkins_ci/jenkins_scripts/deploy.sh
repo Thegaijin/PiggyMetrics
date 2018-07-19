@@ -5,44 +5,14 @@ set -o pipefail
 
 declare_env_variables() {
     echo "Declaring environment variables"
-  RESERVED_IP=${STAGING_RESERVED_IP}
-  RAILS_ENV="staging"
-
-  if [ "$GIT_BRANCH" == 'master' ]; then
-    RESERVED_IP=${PRODUCTION_RESERVED_IP}
-    BUGSNAG_KEY=${PRODUCTION_BUGSNAG_KEY}
-    RAILS_ENV="production"
-  fi
-
-  if [[ "$GIT_BRANCH" =~ 'sandbox' ]]; then
-    RESERVED_IP=${SANDBOX_RESERVED_IP}
-    RAILS_ENV="sandbox"
-  fi
-
-  POSTGRES_DB="${RAILS_ENV}-login-microservice-database"
-  STATE_FILE="state/${RAILS_ENV}/login-microservice/terraform.tfstate"
-  EMOJIS=(":celebrate:"  ":party_dinosaur:"  ":andela:" ":aw-yeah:" ":carlton-dance:" ":partyparrot:" ":dancing-penguin:" ":aww-yeah-remix:" )
-  RANDOM=$$$(date +%s)
-  EMOJI=${EMOJIS[$RANDOM % ${#EMOJIS[@]} ]}
-  GIT_REPO=$(echo ${GIT_URL%%.git*})
-  COMMIT_LINK="${GIT_REPO}/commit/${GIT_COMMIT}"
-  DEPLOYMENT_TEXT="Tag: ${PACKER_IMG_TAG} has just been deployed as the latest ${PROJECT_ID} in ${RAILS_ENV}  $COMMIT_LINK "
-  DEPLOYMENT_CHANNEL=${SLACK_CHANNEL}
-  IMG_TAG="$(git rev-parse --short HEAD)"
-  SLACK_DEPLOYMENT_TEXT="Git Commit Tag: <$COMMIT_LINK|${IMG_TAG}> has just been deployed to *${PROJECT_ID}* in *${RAILS_ENV}* ${EMOJI}"
+  RESERVED_IP=${PIGGYMETRICS_RESERVED_IP}
 }
 
 # get scripts to create infrastructure
 check_out_infrastructure_code() {
     echo "Checkout infrastructure code"
-
     mkdir -p /home/jenkins/vof-repo
-
-    if [ "$GIT_BRANCH" == "master" ]; then
-      git clone -b login-master ${VOF_INFRASTRUCTURE_REPO} /home/jenkins/vof-repo
-    else
-      git clone -b login-develop ${VOF_INFRASTRUCTURE_REPO} /home/jenkins/vof-repo
-    fi
+    cp /Users/svictor/DevOps/Microservices/new-piggy/PiggyMetrics/ /home/jenkins/vof-repo
 }
 
 # create terraform .tfvars file
@@ -50,24 +20,20 @@ create_tfvars_file(){
     echo "Creating login microservice secrets"
 
   touch /home/jenkins/terraform.tfvars
-  sudo cat <<EOF > /home/jenkins/vof-repo/login-micro-service/terraform.tfvars
-login_microservice_state_path="${STATE_FILE}"
-login_microservice_project_id="${PROJECT_ID}"
-login_microservice_bucket="${GCLOUD_VOF_BUCKET}"
-login_microservice_env_name="${RAILS_ENV}"
-reserved_env_ip="${RESERVED_IP}"
+  sudo cat <<EOF > /home/jenkins/vof-repo/Piggymetrics/terraform.tfvars
+piggymetrics_state_path="${STATE_FILE}"
+piggymetrics_project_id="${PROJECT_ID}"
+piggymetrics_bucket="${GCLOUD_VOF_BUCKET}"
+reserved_env_ip="${PIGGYMETRICS_RESERVED_IP}"
 service_account_email="${SERVICE_ACCOUNT_EMAIL}"
-slack_channel="${SLACK_CHANNEL}"
-slack_webhook_url="${SLACK_CHANNEL_HOOK}"
-bugsnag_key="${BUGSNAG_KEY}"
-user_microservice_api_url="${USER_MICROSERVICE_API_URL}"
-user_microservice_api_token="${USER_MICROSERVICE_API_TOKEN}"
+piggymetrics_api_url="${PIGGYMETRICS_API_URL}"
+piggymetrics_api_token="${PIGGYMETRICS_API_TOKEN}"
 EOF
 
     if [ "$RAILS_ENV" == "production" ]; then
         sudo cat <<EOF >> /home/jenkins/vof-repo/login-micro-service/terraform.tfvars
-max_instances="${PRODUCTION_MAX_INSTANCES}"
-db_instance_tier="${PRODUCTION_DB_TIER}"
+max_instances="${MAX_INSTANCES}"
+db_instance_tier="${DB_TIER}"
 EOF
     fi
 
