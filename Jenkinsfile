@@ -16,14 +16,6 @@ node {
     sh "${mvnCMD} clean package"
   }
 
-  def directory = "k8s/"
-    dir(directory){
-      stage('show dir'){
-        sh 'pwd'
-        sh 'ls -al'
-      }
-    }
-
   stage('Build docker images') {
     sh 'docker-compose -f docker-compose.yml -f docker-compose.dev.yml build -d'
   }
