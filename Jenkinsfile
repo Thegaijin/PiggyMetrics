@@ -1,20 +1,14 @@
 node {
-  agent {
-    docker {
-      image 'thegaijin/jenkins-docker'
-      args '-v /usr/local/bundle:/usr/local/bundle -v /run/docker.sock:/var/run/docker.sock'
-    }
-  }
-  stage('SCM checkout') {
-    git 'https://github.com/Thegaijin/PiggyMetrics.git'
-  }
-
   environment {
     CONFIG_SERVICE_PASSWORD=credentials("CONFIG_SERVICE_PASSWORD")
     NOTIFICATION_SERVICE_PASSWORD=credentials("NOTIFICATION_SERVICE_PASSWORD")
     STATISTICS_SERVICE_PASSWORD=credentials("STATISTICS_SERVICE_PASSWORD")
     ACCOUNT_SERVICE_PASSWORD=credentials("ACCOUNT_SERVICE_PASSWORD")
     MONGODB_PASSWORD=credentials("MONGODB_PASSWORD")
+  }
+
+  stage('SCM checkout') {
+    git 'https://github.com/Thegaijin/PiggyMetrics.git'
   }
 
   stage('compiler, tester, packager') {
