@@ -1,4 +1,10 @@
 node {
+  agent {
+    docker {
+      image 'thegaijin/jenkins-docker'
+      args '-v /usr/local/bundle:/usr/local/bundle -v /run/docker.sock:/var/run/docker.sock'
+    }
+  }
   stage('SCM checkout') {
     git 'https://github.com/Thegaijin/PiggyMetrics.git'
   }
