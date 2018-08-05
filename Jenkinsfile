@@ -17,7 +17,7 @@ node {
   }
 
   stage('Build docker images') {
-    sh 'docker-compose -f docker-compose.yml -f docker-compose.dev.yml build'
+    sh 'sudo docker-compose -f docker-compose.yml -f docker-compose.dev.yml build'
   }
 
   stage('login to dockerhub') {
