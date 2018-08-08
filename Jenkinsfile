@@ -1,10 +1,4 @@
 node {
-  agent {
-    docker {
-      image 'thegaijin/jenkins-docker'
-      args '-v /usr/local/bundle:/usr/local/bundle -v /run/docker.sock:/var/run/docker.sock'
-    }
-  }
   environment {
     CONFIG_SERVICE_PASSWORD=123456789
     NOTIFICATION_SERVICE_PASSWORD=123456789
@@ -35,5 +29,11 @@ node {
 
   stage('Push images to dockerhub') {
     sh 'docker-compose push'
+  }
+
+  stage('deploy') {
+    sh 'sudo find / -name docker'
+    sh 'chmod 777 ./jenkins_ci/jenkins_scripts/deploy.sh'
+    sh './jenkins_ci/jenkins_scripts/deploy.sh'
   }
 }
