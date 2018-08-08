@@ -13,17 +13,9 @@ RUN apt-get install -y --no-install-recommends apt-utils
 
 # add jenkins user and enable login
 RUN useradd jenkins --shell /bin/bash --create-home && \
-    echo "jenkins ALL=NOPASSWD: ALL" >> /etc/sudoers && \
+    adduser jenkins sudo \
+    passwd -d jenkins \
     usermod -u 113 jenkins
-
-RUN mkdir -p ~/workdir && \
-    apt-get install unzip && \
-    cd ~/workdir && \
-    wget https://releases.hashicorp.com/terraform/0.10.6/terraform_0.10.6_linux_amd64.zip && \
-    unzip terraform_0.10.6_linux_amd64.zip && \
-    chmod +x terraform && \
-    mv terraform /usr/local/bin/ && \
-    rm -r ~/workdir
 
 RUN apt-get update -qq && apt-get install -qqy \
     apt-transport-https \
@@ -32,7 +24,8 @@ RUN apt-get update -qq && apt-get install -qqy \
     wget \
     iptables \
     python \
-    gnupg2 \
+    python-pip
+gnupg2 \
     software-properties-common
 
 
@@ -57,7 +50,7 @@ VOLUME /var/lib/docker
 USER jenkins
 RUN curl https://sdk.cloud.google.com | bash
 
-ENV PATH $PATH:/home/jenkins/google-cloud-sdk/bin
-RUN gcloud components install kubectl beta --quiet
+# ENV PATH $PATH:/home/jenkins/google-cloud-sdk/bin
+# RUN gcloud components install kubectl beta --quiet
 
 CMD ["wrapdocker"]

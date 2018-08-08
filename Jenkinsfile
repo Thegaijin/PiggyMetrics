@@ -24,10 +24,6 @@ node {
   }
 
   stage('Build docker images') {
-    sh 'whoami'
-    sh 'sudo usermod -aG docker $USER'
-    sh 'sudo gpasswd -a jenkins docker'
-    sh 'sudo chmod 777 /var/run/docker.sock'
     sh 'docker-compose -f docker-compose.yml -f docker-compose.dev.yml build'
   }
 
