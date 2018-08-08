@@ -256,4 +256,4 @@ Also, Service Discovery mechanism needs some time after all applications startup
 
 PiggyMetrics is open source, and would greatly appreciate your help. Feel free to contact me with any questions.
 
-trigger build 1
+trigger build 1 2
