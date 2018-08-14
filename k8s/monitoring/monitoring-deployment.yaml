@@ -22,9 +22,3 @@ spec:
             - name: port2
               containerPort: 8080
               protocol: TCP
-      # env:
-      #   - name: CONFIG_SERVICE_PASSWORD
-      #     valueFrom:
-      #       secretKeyRef:
-      #         name: ms-credentials
-      #         key: username
