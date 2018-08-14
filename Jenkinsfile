@@ -32,6 +32,7 @@ node {
   }
 
   stage('deploy') {
-    sh 'kubectl create -f k8s/'
+    sh 'pwd'
+    sh 'kubectl create -f ./k8s'
   }
 }
