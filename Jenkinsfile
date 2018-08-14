@@ -32,8 +32,13 @@ node {
   }
 
   stage('deploy') {
-    sh 'ls -la'
-    sh 'pwd'
-    sh 'kubectl create -R -f ./k8s'
+    steps {
+      script {
+        kubectl create -R -f ./k8s
+        if [[ $? !== 0 ]]; then
+          kubectl apply -R -f ./k8s
+        fi
+      }
+    }
   }
 }
