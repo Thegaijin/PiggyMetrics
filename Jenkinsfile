@@ -1,10 +1,10 @@
 node {
   environment {
-    CONFIG_SERVICE_PASSWORD=123456789
-    NOTIFICATION_SERVICE_PASSWORD=123456789
-    STATISTICS_SERVICE_PASSWORD=123456789
-    ACCOUNT_SERVICE_PASSWORD=123456789
-    MONGODB_PASSWORD=123456789
+    CONFIG_SERVICE_PASSWORD       = credentials('CONFIG_SERVICE_PASSWORD')
+    NOTIFICATION_SERVICE_PASSWORD = credentials('NOTIFICATION_SERVICE_PASSWORD')
+    STATISTICS_SERVICE_PASSWORD   = credentials('STATISTICS_SERVICE_PASSWORD')
+    ACCOUNT_SERVICE_PASSWORD      = credentials('ACCOUNT_SERVICE_PASSWORD')
+    MONGODB_PASSWORD              = credentials('MONGODB_PASSWORD')
   }
 
   stage('SCM checkout') {
@@ -32,8 +32,6 @@ node {
   }
 
   stage('deploy') {
-    sh 'sudo find / -name docker'
-    sh 'chmod 777 ./jenkins_ci/jenkins_scripts/deploy.sh'
-    sh './jenkins_ci/jenkins_scripts/deploy.sh'
+    sh 'kubectl create -f k8s'
   }
 }
