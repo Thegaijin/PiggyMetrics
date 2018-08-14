@@ -16,10 +16,9 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: jenkins
-  namespace: jenkins-lms
 spec:
   tls:
-  - secretName: tls
+    - secretName: tls
   backend:
     serviceName: jenkins-ui
     servicePort: 8080
