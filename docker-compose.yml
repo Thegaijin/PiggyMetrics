@@ -7,8 +7,8 @@ services:
       - 15672:15672
     logging:
       options:
-        max-size: "10m"
-        max-file: "10"
+        max-size: '10m'
+        max-file: '10'
 
   config:
     environment:
@@ -19,8 +19,8 @@ services:
     restart: always
     logging:
       options:
-        max-size: "10m"
-        max-file: "10"
+        max-size: '10m'
+        max-file: '10'
 
   registry:
     environment:
@@ -36,8 +36,8 @@ services:
       - 8761:8761
     logging:
       options:
-        max-size: "10m"
-        max-file: "10"
+        max-size: '10m'
+        max-file: '10'
 
   gateway:
     environment:
@@ -53,16 +53,16 @@ services:
       - 81:4000
     logging:
       options:
-        max-size: "10m"
-        max-file: "10"
+        max-size: '10m'
+        max-file: '10'
 
   auth-service:
     environment:
-      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
-      NOTIFICATION_SERVICE_PASSWORD: $NOTIFICATION_SERVICE_PASSWORD
-      STATISTICS_SERVICE_PASSWORD: $STATISTICS_SERVICE_PASSWORD
-      ACCOUNT_SERVICE_PASSWORD: $ACCOUNT_SERVICE_PASSWORD
-      MONGODB_PASSWORD: $MONGODB_PASSWORD
+      CONFIG_SERVICE_PASSWORD: ${CONFIG_SERVICE_PASSWORD}
+      NOTIFICATION_SERVICE_PASSWORD: ${NOTIFICATION_SERVICE_PASSWORD}
+      STATISTICS_SERVICE_PASSWORD: ${STATISTICS_SERVICE_PASSWORD}
+      ACCOUNT_SERVICE_PASSWORD: ${ACCOUNT_SERVICE_PASSWORD}
+      MONGODB_PASSWORD: ${MONGODB_PASSWORD}
     build: auth-service/.
     container_name: ms-pgs-auth-service
     image: thegaijin/ms-pgs-auth-service:latest
@@ -72,8 +72,8 @@ services:
         condition: service_healthy
     logging:
       options:
-        max-size: "10m"
-        max-file: "10"
+        max-size: '10m'
+        max-file: '10'
 
   auth-mongodb:
     environment:
@@ -84,8 +84,8 @@ services:
     restart: always
     logging:
       options:
-        max-size: "10m"
-        max-file: "10"
+        max-size: '10m'
+        max-file: '10'
 
   account-service:
     environment:
@@ -101,27 +101,27 @@ services:
         condition: service_healthy
     logging:
       options:
-        max-size: "10m"
-        max-file: "10"
+        max-size: '10m'
+        max-file: '10'
 
   account-mongodb:
     environment:
       INIT_DUMP: account-service-dump.js
-      MONGODB_PASSWORD: $MONGODB_PASSWORD
+      MONGODB_PASSWORD: ${MONGODB_PASSWORD}
     build: mongodb/.
     container_name: ms-pgs-account-mongodb
     image: thegaijin/ms-pgs-account-mongodb:latest
     restart: always
     logging:
       options:
-        max-size: "10m"
-        max-file: "10"
+        max-size: '10m'
+        max-file: '10'
 
   statistics-service:
     environment:
-      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
-      MONGODB_PASSWORD: $MONGODB_PASSWORD
-      STATISTICS_SERVICE_PASSWORD: $STATISTICS_SERVICE_PASSWORD
+      CONFIG_SERVICE_PASSWORD: ${CONFIG_SERVICE_PASSWORD}
+      MONGODB_PASSWORD: ${MONGODB_PASSWORD}
+      STATISTICS_SERVICE_PASSWORD: ${STATISTICS_SERVICE_PASSWORD}
     build: statistics-service/.
     container_name: ms-pgs-statistics-service
     image: thegaijin/ms-pgs-statistics-service:latest
@@ -131,26 +131,26 @@ services:
         condition: service_healthy
     logging:
       options:
-        max-size: "10m"
-        max-file: "10"
+        max-size: '10m'
+        max-file: '10'
 
   statistics-mongodb:
     environment:
-      MONGODB_PASSWORD: $MONGODB_PASSWORD
+      MONGODB_PASSWORD: ${MONGODB_PASSWORD}
     build: mongodb/.
     container_name: ms-pgs-statistics-mongodb
     image: thegaijin/ms-pgs-statistics-mongodb:latest
     restart: always
     logging:
       options:
-        max-size: "10m"
-        max-file: "10"
+        max-size: '10m'
+        max-file: '10'
 
   notification-service:
     environment:
-      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
-      MONGODB_PASSWORD: $MONGODB_PASSWORD
-      NOTIFICATION_SERVICE_PASSWORD: $NOTIFICATION_SERVICE_PASSWORD
+      CONFIG_SERVICE_PASSWORD: ${CONFIG_SERVICE_PASSWORD}
+      MONGODB_PASSWORD: ${MONGODB_PASSWORD}
+      NOTIFICATION_SERVICE_PASSWORD: ${NOTIFICATION_SERVICE_PASSWORD}
     build: notification-service/.
     container_name: ms-pgs-notification-service
     image: thegaijin/ms-pgs-notification-service:latest
@@ -160,8 +160,8 @@ services:
         condition: service_healthy
     logging:
       options:
-        max-size: "10m"
-        max-file: "10"
+        max-size: '10m'
+        max-file: '10'
 
   notification-mongodb:
     build: mongodb/.
@@ -169,15 +169,15 @@ services:
     image: thegaijin/ms-pgs-notification-mongodb:latest
     restart: always
     environment:
-      MONGODB_PASSWORD: $MONGODB_PASSWORD
+      MONGODB_PASSWORD: ${MONGODB_PASSWORD}
     logging:
       options:
-        max-size: "10m"
-        max-file: "10"
+        max-size: '10m'
+        max-file: '10'
 
   monitoring:
     environment:
-      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+      CONFIG_SERVICE_PASSWORD: ${CONFIG_SERVICE_PASSWORD}
     build: ./monitoring
     container_name: ms-pgs-monitoring
     image: thegaijin/ms-pgs-monitoring
@@ -190,5 +190,5 @@ services:
       - 8989:8989
     logging:
       options:
-        max-size: "10m"
-        max-file: "10"
+        max-size: '10m'
+        max-file: '10'
