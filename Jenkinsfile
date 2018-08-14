@@ -32,6 +32,6 @@ node {
   }
 
   stage('deploy') {
-    sh 'kubectl create -f k8s'
+    sh 'kubectl create -f k8s/'
   }
 }
