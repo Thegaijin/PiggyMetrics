@@ -17,11 +17,7 @@ spec:
         - name: config
           image: thegaijin/config
           ports:
-          - containerPort: 8888
-            protocol: TCP
+            - containerPort: 8888
           env:
             - name: CONFIG_SERVICE_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: ms-credentials
-                  key: password
+              value: ${CONFIG_SERVICE_PASSWORD}

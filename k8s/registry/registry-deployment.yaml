@@ -16,5 +16,4 @@ spec:
         - name: registry
           image: thegaijin/registry
           ports:
-          - containerPort: 8761
-            protocol: TCP
+            - containerPort: 8761

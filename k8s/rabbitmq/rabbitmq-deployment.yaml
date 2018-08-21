@@ -13,8 +13,7 @@ spec:
         service: rabbitmq-service
     spec:
       containers:
-        - name: rabbitmq-3-management
+        - name: rabbitmq
           image: rabbitmq/3-management
           ports:
             - containerPort: 15672
-              protocol: TCP

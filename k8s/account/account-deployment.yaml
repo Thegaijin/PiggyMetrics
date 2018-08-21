@@ -17,26 +17,15 @@ spec:
         - name: ms-pgs-account-service
           image: thegaijin/ms-pgs-account-service
           ports:
-          - containerPort: 6000
-            protocol: TCP
+            - containerPort: 6000
         - name: ms-pgs-account-mongodb
           image: thegaijin/ms-pgs-account-mongodb
           ports:
-          - containerPort: 27017
-            protocol: TCP
+            - containerPort: 27017
           env:
             - name: ACCOUNT_SERVICE_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: ms-credentials
-                  key: password
+              value: ${ACCOUNT_SERVICE_PASSWORD}
             - name: CONFIG_SERVICE_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: ms-credentials
-                  key: password
+              value: ${CONFIG_SERVICE_PASSWORD}
             - name: MONGODB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: ms-credentials
-                  key: password
+              value: ${MONGODB_PASSWORD}
