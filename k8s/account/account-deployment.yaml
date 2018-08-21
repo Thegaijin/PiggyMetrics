@@ -17,10 +17,6 @@ spec:
           image: thegaijin/ms-pgs-account-service
           ports:
             - containerPort: 6000
-        - name: ms-pgs-account-mongodb
-          image: thegaijin/ms-pgs-account-mongodb
-          ports:
-            - containerPort: 27017
           env:
             - name: ACCOUNT_SERVICE_PASSWORD
               value: ${ACCOUNT_SERVICE_PASSWORD}
