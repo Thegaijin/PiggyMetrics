@@ -17,6 +17,10 @@ spec:
           image: thegaijin/ms-pgs-notification-service
           ports:
             - containerPort: 8000
+        - name: ms-pgs-notification-mongodb
+          image: thegaijin/ms-pgs-notification-mongodb
+          ports:
+            - containerPort: 27017
           env:
             - name: NOTIFICATION_SERVICE_PASSWORD
               value: ${NOTIFICATION_SERVICE_PASSWORD}

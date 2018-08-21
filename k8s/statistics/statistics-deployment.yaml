@@ -17,6 +17,10 @@ spec:
           image: thegaijin/ms-pgs-statistics-service
           ports:
             - containerPort: 7000
+        - name: ms-pgs-statistics-mongodb
+          image: thegaijin/ms-pgs-statistics-mongodb
+          ports:
+            - containerPort: 27017
           env:
             - name: STATISTICS_SERVICE_PASSWORD
               value: ${STATISTICS_SERVICE_PASSWORD}
