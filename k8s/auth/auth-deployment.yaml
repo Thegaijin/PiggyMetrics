@@ -17,12 +17,10 @@ spec:
           image: thegaijin/ms-pgs-auth-service
           ports:
             - containerPort: 5000
-              protocol: TCP
         - name: ms-pgs-auth-mongodb
           image: thegaijin/ms-pgs-auth-mongodb
           ports:
             - containerPort: 27017
-              protocol: TCP
           env:
             - name: ACCOUNT_SERVICE_PASSWORD
               value: ${ACCOUNT_SERVICE_PASSWORD}
