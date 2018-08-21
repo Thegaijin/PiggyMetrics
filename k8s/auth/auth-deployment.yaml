@@ -1,4 +1,3 @@
----
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -17,36 +16,21 @@ spec:
         - name: ms-pgs-auth-service
           image: thegaijin/ms-pgs-auth-service
           ports:
-          - containerPort: 5000
-            protocol: TCP
+            - containerPort: 5000
+              protocol: TCP
         - name: ms-pgs-auth-mongodb
           image: thegaijin/ms-pgs-auth-mongodb
           ports:
-          - containerPort: 27017
-            protocol: TCP
+            - containerPort: 27017
+              protocol: TCP
           env:
             - name: ACCOUNT_SERVICE_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: ms-credentials
-                  key: password
+              value: ${ACCOUNT_SERVICE_PASSWORD}
             - name: STATISTICS_SERVICE_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: ms-credentials
-                  key: password
+              value: ${STATISTICS_SERVICE_PASSWORD}
             - name: CONFIG_SERVICE_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: ms-credentials
-                  key: password
+              value: ${CONFIG_SERVICE_PASSWORD}
             - name: NOTIFICATION_SERVICE_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: ms-credentials
-                  key: password
+              value: ${NOTIFICATION_SERVICE_PASSWORD}
             - name: MONGODB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: ms-credentials
-                  key: password
+              value: ${MONGODB_PASSWORD}
