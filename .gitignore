@@ -12,3 +12,4 @@ target/
 
 bkup/
 sample
+.env
