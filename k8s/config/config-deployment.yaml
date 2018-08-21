@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: config
-          image: thegaijin/config
+          image: thegaijin/ms-pgs-config
           ports:
             - containerPort: 8888
           env:

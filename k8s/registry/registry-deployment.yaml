@@ -13,6 +13,6 @@ spec:
     spec:
       containers:
         - name: registry
-          image: thegaijin/registry
+          image: thegaijin/ms-pgs-registry
           ports:
             - containerPort: 8761

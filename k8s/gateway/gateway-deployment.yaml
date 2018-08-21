@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: gateway
-          image: thegaijin/gateway
+          image: thegaijin/ms-pgs-gateway
           ports:
             - containerPort: 4000
           env:
